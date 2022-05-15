@@ -19,7 +19,8 @@ namespace Contoso.Infrastructure.Configurations
 
             builder.HasOne(i => i.Department)
                 .WithMany(d => d.Instructors)
-                .HasForeignKey(i => i.DepartmentId);
+                .HasForeignKey(i => i.DepartmentId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder.Property(i => i.FullName)
                 .IsRequired()

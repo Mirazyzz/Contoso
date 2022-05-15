@@ -12,13 +12,14 @@ namespace Contoso.Infrastructure.Configurations
 
             builder.HasKey(d => d.DepartmentId);
 
+            builder.HasOne(d => d.City)
+                .WithMany(c => c.Departments)
+                .HasForeignKey(d => d.CityId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             builder.Property(d => d.DepartmentName)
                 .IsRequired()
                 .HasMaxLength(150);
-
-            builder.HasOne(d => d.City)
-                .WithMany(c => c.Departments)
-                .HasForeignKey(d => d.CityId);
         }
     }
 }

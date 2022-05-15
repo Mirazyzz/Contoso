@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Contoso.Domain.Entities
+﻿namespace Contoso.Domain.Entities
 {
     public class Department : BaseEntity
     {
-        [Key]
         public int DepartmentId { get; private set; }
         public string DepartmentName { get; set; }
 

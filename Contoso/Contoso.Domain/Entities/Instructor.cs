@@ -1,11 +1,9 @@
 ﻿using Contoso.Domain.Enums;
-using System.ComponentModel.DataAnnotations;
 
 namespace Contoso.Domain.Entities
 {
     public class Instructor : BaseEntity
     {
-        [Key]
         public int InstructorId { get; private set; }
         public string FullName { get; set; }
         public DateTime? HireDate { get; set; }

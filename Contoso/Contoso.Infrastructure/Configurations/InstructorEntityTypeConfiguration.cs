@@ -22,6 +22,8 @@ namespace Contoso.Infrastructure.Configurations
                 .HasForeignKey(i => i.DepartmentId)
                 .OnDelete(DeleteBehavior.SetNull);
 
+            builder.Property(i => i.InstructorId)
+                .ValueGeneratedOnAdd();
             builder.Property(i => i.FullName)
                 .IsRequired()
                 .HasMaxLength(150);

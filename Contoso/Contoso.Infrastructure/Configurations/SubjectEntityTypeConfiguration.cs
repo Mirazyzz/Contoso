@@ -16,6 +16,8 @@ namespace Contoso.Infrastructure.Configurations
                 .WithOne(e => e.Subject)
                 .HasForeignKey(e => e.SubjectId);
 
+            builder.Property(s => s.SubjectId)
+                .ValueGeneratedOnAdd();
             builder.Property(s => s.SubjectName)
                 .IsRequired()
                 .HasMaxLength(150);

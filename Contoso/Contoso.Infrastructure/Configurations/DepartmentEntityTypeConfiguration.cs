@@ -17,6 +17,8 @@ namespace Contoso.Infrastructure.Configurations
                 .HasForeignKey(d => d.CityId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Property(d => d.DepartmentId)
+                .ValueGeneratedOnAdd();
             builder.Property(d => d.DepartmentName)
                 .IsRequired()
                 .HasMaxLength(150);

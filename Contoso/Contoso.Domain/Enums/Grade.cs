@@ -2,11 +2,11 @@
 {
     public enum Grade
     {
-        A,
-        B,
-        C,
-        D,
+        F,
         E,
-        F
+        D,
+        C,
+        B,
+        A
     }
 }

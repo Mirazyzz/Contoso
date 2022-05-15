@@ -17,6 +17,8 @@ namespace Contoso.Infrastructure.Configurations
                 .WithOne(e => e.Student)
                 .HasForeignKey(e => e.StudentId);
 
+            builder.Property(s => s.StudentId)
+                .ValueGeneratedOnAdd();
             builder.Property(s => s.FirstName)
                 .IsRequired()
                 .HasMaxLength(50);

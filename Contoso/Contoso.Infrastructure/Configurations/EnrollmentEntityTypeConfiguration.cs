@@ -19,6 +19,8 @@ namespace Contoso.Infrastructure.Configurations
                 .WithMany(s => s.Enrollments)
                 .HasForeignKey(e => e.SubjectId);
 
+            builder.Property(e => e.EnrollmentId)
+                .ValueGeneratedOnAdd();
             builder.Property(e => e.Grade)
                 .IsRequired(false);
         }

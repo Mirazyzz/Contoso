@@ -19,6 +19,8 @@ namespace Contoso.Infrastructure.Configurations
                 .WithMany(s => s.CourseAssignments)
                 .HasForeignKey(ca => ca.SubjectId);
 
+            builder.Property(ca => ca.CourseAssignmentId)
+                .ValueGeneratedOnAdd();
             builder.Property(ca => ca.SalaryPerHour)
                 .IsRequired(false)
                 .HasDefaultValue(25m);

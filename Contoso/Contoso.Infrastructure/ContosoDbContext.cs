@@ -7,6 +7,11 @@ namespace Contoso.Infrastructure
     {
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
+        public virtual DbSet<Student> Students { get; set; }
+        public virtual DbSet<Subject> Subjects { get; set; }
+        public virtual DbSet<Enrollment> Enrollments { get; set; }
+        public virtual DbSet<Instructor> Instructors { get; set; }
+        public virtual DbSet<CourseAssignment> CourseAssignments { get; set; }
 
         public ContosoDbContext(DbContextOptions<ContosoDbContext> options)
             : base(options)

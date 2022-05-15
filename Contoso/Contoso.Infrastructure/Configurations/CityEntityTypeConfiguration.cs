@@ -12,13 +12,16 @@ namespace Contoso.Infrastructure.Configurations
 
             builder.HasKey(c => c.CityId);
 
-            builder.Property(c => c.CityName)
-                .IsRequired()
-                .HasMaxLength(100);
 
             builder.HasMany(c => c.Departments)
                 .WithOne(d => d.City)
                 .HasForeignKey(d => d.CityId);
+
+            builder.Property(c => c.CityId)
+                .ValueGeneratedOnAdd();
+            builder.Property(c => c.CityName)
+                .IsRequired()
+                .HasMaxLength(100);
         }
     }
 }

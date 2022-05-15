@@ -1,3 +1,5 @@
+using Contoso.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -6,6 +8,7 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("ContosoConnectionString");
 
 //configure logger
 builder.Host.UseSerilog();
@@ -22,6 +25,14 @@ builder.Services.AddControllers(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+#if DEBUG
+builder.Services.AddDbContext<ContosoDbContext>(
+    options => options.UseSqlite(connectionString));
+#else
+builder.Services.AddDbContext<ContosoDbContext>(
+    options => options.UseSqlServer(connectionString));
+#endif
 
 var app = builder.Build();
 

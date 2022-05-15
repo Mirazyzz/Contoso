@@ -8,7 +8,7 @@ namespace Contoso.Domain.Entities
         public int CityId { get; private set; }
         public string CityName { get; set; }
 
-        public ICollection<Department> Departments { get; set; }
+        public virtual ICollection<Department> Departments { get; set; }
 
         public City(string name)
         {

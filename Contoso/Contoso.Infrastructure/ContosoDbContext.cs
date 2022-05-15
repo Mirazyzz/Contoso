@@ -5,9 +5,9 @@ namespace Contoso.Infrastructure
 {
     public class ContosoDbContext : DbContext
     {
-        public DbSet<BaseEntity> BaseEntity { get; set; }
-        public DbSet<City> Cities { get; set; }
-        public DbSet<Department> Departments { get; set; }
+        public virtual DbSet<BaseEntity> BaseEntity { get; set; }
+        public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<Department> Departments { get; set; }
 
         public ContosoDbContext(DbContextOptions<ContosoDbContext> options)
             : base(options)
@@ -20,6 +20,9 @@ namespace Contoso.Infrastructure
 
             modelBuilder.Entity<City>().ToTable("City");
             modelBuilder.Entity<Department>().ToTable("Department");
+            //modelBuilder.Entity<Student>().ToTable("Student");
+            //modelBuilder.Entity<Subject>().ToTable("Subject");
+            //modelBuilder.Entity<Enrollment>().ToTable("Enrollment");
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ContosoDbContext).Assembly);
         }

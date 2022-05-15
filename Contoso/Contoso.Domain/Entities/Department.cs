@@ -8,12 +8,13 @@ namespace Contoso.Domain.Entities
         public int DepartmentId { get; private set; }
         public string DepartmentName { get; set; }
 
-        public City? City { get; set; }
+        public virtual City City { get; set; }
         public int CityId { get; set; }
 
-        public Department(string departmentName)
+        public Department(string departmentName, City city)
         {
             DepartmentName = departmentName;
+            City = city;
         }
     }
 }

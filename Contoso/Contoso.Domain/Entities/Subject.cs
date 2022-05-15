@@ -8,11 +8,13 @@
         public int? TotalHours { get; set; }
 
         public virtual ICollection<Enrollment> Enrollments { get; set; }
+        public virtual ICollection<CourseAssignment> CourseAssignments { get; set; }
 
         public Subject(string subjectName)
         {
             SubjectName = subjectName;
             Enrollments = new List<Enrollment>();
+            CourseAssignments = new List<CourseAssignment>();
         }
     }
 }

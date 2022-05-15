@@ -11,9 +11,12 @@ namespace Contoso.Domain.Entities
         public virtual City City { get; set; }
         public int CityId { get; set; }
 
+        public virtual ICollection<Instructor> Instructors { get; set; }
+
         public Department(string departmentName)
         {
             DepartmentName = departmentName;
+            Instructors = new List<Instructor>();
         }
     }
 }

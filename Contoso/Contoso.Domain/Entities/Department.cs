@@ -11,10 +11,9 @@ namespace Contoso.Domain.Entities
         public virtual City City { get; set; }
         public int CityId { get; set; }
 
-        public Department(string departmentName, City city)
+        public Department(string departmentName)
         {
             DepartmentName = departmentName;
-            City = city;
         }
     }
 }

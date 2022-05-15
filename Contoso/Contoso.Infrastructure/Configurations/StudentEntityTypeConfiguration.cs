@@ -9,6 +9,8 @@ namespace Contoso.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Student> builder)
         {
+            builder.ToTable("Student");
+
             builder.HasKey(s => s.StudentId);
 
             builder.HasMany(s => s.Enrollments)

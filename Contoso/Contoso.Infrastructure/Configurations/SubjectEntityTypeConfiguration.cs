@@ -1,11 +1,6 @@
 ﻿using Contoso.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Contoso.Infrastructure.Configurations
 {
@@ -13,6 +8,8 @@ namespace Contoso.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Subject> builder)
         {
+            builder.ToTable("Subject");
+
             builder.HasKey(s => s.SubjectId);
 
             builder.HasMany(s => s.Enrollments)

@@ -10,9 +10,9 @@ namespace Contoso.Domain.Entities
 
         public virtual ICollection<Department> Departments { get; set; }
 
-        public City(string name)
+        public City(string cityName)
         {
-            CityName = name;
+            CityName = cityName;
             Departments = new List<Department>();
         }
     }

@@ -7,7 +7,7 @@ namespace Contoso.Domain.Entities
         public int StudentId { get; private set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
         public Gender Gender { get; set; }
 
         public virtual ICollection<Enrollment> Enrollments { get; set; }

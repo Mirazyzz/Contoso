@@ -8,6 +8,8 @@ namespace Contoso.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<City> builder)
         {
+            builder.ToTable("City");
+
             builder.HasKey(c => c.CityId);
 
             builder.Property(c => c.CityName)

@@ -8,6 +8,8 @@ namespace Contoso.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Enrollment> builder)
         {
+            builder.ToTable("Enrollment");
+
             builder.HasKey(e => e.EnrollmentId);
 
             builder.HasOne(e => e.Student)

@@ -8,6 +8,8 @@ namespace Contoso.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Department> builder)
         {
+            builder.ToTable("Department");
+
             builder.HasKey(d => d.DepartmentId);
 
             builder.Property(d => d.DepartmentName)

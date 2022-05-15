@@ -8,7 +8,7 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("ContosoConnectionString");
+var connectionString = builder.Configuration.GetConnectionString("ContosoContext");
 
 //configure logger
 builder.Host.UseSerilog();

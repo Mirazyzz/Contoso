@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Contoso.Domain.DTOs.Students
 {
-    internal class StudentForCreation
+    internal class StudentForCreateDto
     {
     }
 }

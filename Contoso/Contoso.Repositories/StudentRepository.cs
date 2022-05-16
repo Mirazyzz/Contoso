@@ -1,5 +1,4 @@
-﻿using Contoso.Domain.DTOs.Students;
-using Contoso.Domain.Entities;
+﻿using Contoso.Domain.Entities;
 using Contoso.Domain.Interfaces.Repostiory;
 using Contoso.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +12,7 @@ namespace Contoso.Repositories
         {
         }
 
-        public void CreateStudent(StudentDto newStudentDto)
+        public void CreateStudent(Student newStudent)
         {
             Create(newStudent);
         }

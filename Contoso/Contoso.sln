@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contoso.Domain", "Contoso.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contoso.Infrastructure", "Contoso.Infrastructure\Contoso.Infrastructure.csproj", "{494531AB-728D-453B-BD09-382AE0BB8D75}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contoso.Services", "Contoso.Services\Contoso.Services.csproj", "{FC360CA7-18F3-4F1A-84E5-CC81514103EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contoso.Repositories", "Contoso.Repositories\Contoso.Repositories.csproj", "{28E484E8-945B-4EDA-8BED-6767016D5933}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{494531AB-728D-453B-BD09-382AE0BB8D75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{494531AB-728D-453B-BD09-382AE0BB8D75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{494531AB-728D-453B-BD09-382AE0BB8D75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC360CA7-18F3-4F1A-84E5-CC81514103EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC360CA7-18F3-4F1A-84E5-CC81514103EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC360CA7-18F3-4F1A-84E5-CC81514103EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC360CA7-18F3-4F1A-84E5-CC81514103EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28E484E8-945B-4EDA-8BED-6767016D5933}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28E484E8-945B-4EDA-8BED-6767016D5933}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28E484E8-945B-4EDA-8BED-6767016D5933}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28E484E8-945B-4EDA-8BED-6767016D5933}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

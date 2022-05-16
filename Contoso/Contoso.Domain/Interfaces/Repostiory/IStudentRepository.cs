@@ -1,5 +1,4 @@
-﻿using Contoso.Domain.DTOs.Students;
-using Contoso.Domain.Entities;
+﻿using Contoso.Domain.Entities;
 
 namespace Contoso.Domain.Interfaces.Repostiory
 {

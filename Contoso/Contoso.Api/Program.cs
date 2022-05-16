@@ -1,3 +1,4 @@
+using Contoso.Api.Extensions;
 using Contoso.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -25,6 +26,7 @@ builder.Services.AddControllers(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.RegisterDependencyInjection();
 
 #if DEBUG
 builder.Services.AddDbContext<ContosoDbContext>(

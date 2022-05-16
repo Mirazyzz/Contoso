@@ -1,5 +1,7 @@
-﻿using Contoso.Domain.DTOs.Students;
+﻿using AutoMapper;
+using Contoso.Domain.DTOs.Students;
 using Contoso.Domain.Entities;
+using Contoso.Domain.Exceptions;
 using Contoso.Domain.Interfaces.Repostiory;
 using Contoso.Domain.Interfaces.Services;
 
@@ -8,17 +10,36 @@ namespace Contoso.Services
     public class StudentService : IStudentService
     {
         private readonly ICommonRepository _repository;
+        private readonly IMapper _mapper;
 
-        public StudentService(ICommonRepository repository)
+        public StudentService(ICommonRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
-        public void CreateStudent(StudentDto newStudentDto)
+        public async void CreateStudent(StudentDto newStudentDto)
         {
             var errors = new List<string>();
 
-            Student newStudentMapped = new Student(newStudentDto.FirstName, newStudentDto.LastName, newStudentDto.BirthDate, newStudentDto.Gender);
+            var student = _mapper.Map<Student>(newStudentDto);
+
+            if(student == null)
+            {
+                throw new ContosoException("There was an errr mapping dto to entity type");
+            }
+
+            try
+            {
+                // Create a new student
+                _repository.Student.Create(student);
+                // save changes to db
+                await _repository.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                throw new CreateDbException("There was an error adding a new student", ex.Message);
+            }
         }
 
         public void DeleteStudent(StudentDto studentToDeleteDto)
@@ -26,9 +47,18 @@ namespace Contoso.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<StudentDto>> GetStudentsAsync()
+        public async Task<IEnumerable<StudentDto>> GetStudentsAsync()
         {
-            throw new NotImplementedException();
+            var students = await _repository.Student.GetAllStudents();
+
+            if(students == null)
+            {
+                throw new Exception("No students found.");
+            }
+
+            var studentDtos = _mapper.Map<IEnumerable<StudentDto>>(students);
+
+            return studentDtos;
         }
 
         public void UpdateStudent(StudentDto studentToUpdateDto)

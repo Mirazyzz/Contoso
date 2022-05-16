@@ -8,10 +8,9 @@ namespace Contoso.Domain.Interfaces.Repostiory
         Task<T> FindById(int id);
         IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
         void Create(T entity);
+        Task CreateRange(IEnumerable<T> entity);
         void Update(T entity);
         void Delete(T entity);
         Task<bool> SaveChangesAsync();
-
-        Task CreateRange(IEnumerable<T> entity);
     }
 }

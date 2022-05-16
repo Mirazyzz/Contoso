@@ -18,5 +18,15 @@ namespace Contoso.Domain.Entities
             LastName = lastName;
             Enrollments = new List<Enrollment>();
         }
+
+        public Student(string firstName, string lastName, DateTime? birthDate, Gender? gender)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            BirthDate = birthDate;
+            Gender = gender ?? Gender.Undisclosed;
+
+            Enrollments = new List<Enrollment>();
+        }   
     }
 }

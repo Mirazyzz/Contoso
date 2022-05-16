@@ -1,4 +1,5 @@
-﻿using Contoso.Domain.Entities;
+﻿using Contoso.Domain.DTOs.Students;
+using Contoso.Domain.Entities;
 
 namespace Contoso.Domain.Interfaces.Repostiory
 {
@@ -6,8 +7,8 @@ namespace Contoso.Domain.Interfaces.Repostiory
     {
         Task<List<Student>> GetAllStudents();
         Task<Student> GetStudentByIdAsync(int id);
-        void CreateStudent(Student newStudent);
-        void DeleteStudent(Student studentToRemove);
-        void UpdateStudent(Student studentToUpdate);
+        void CreateStudent(Student newStudentDto);
+        void DeleteStudent(Student studentToDeleteDto);
+        void UpdateStudent(Student studentToUpdateDto);
     }
 }

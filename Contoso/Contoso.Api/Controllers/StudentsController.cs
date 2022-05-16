@@ -18,6 +18,8 @@ namespace Contoso.Api.Controllers
             _logger = logger;
         }
 
+        #region CRUD
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<StudentDto>>> GetStudents()
         {
@@ -136,7 +138,7 @@ namespace Contoso.Api.Controllers
                 return BadRequest(ex.Message);
             }
             finally
-            {
+            { 
                 _logger.LogError(errorMessage, exceptionMessage);
             }
         }
@@ -172,5 +174,7 @@ namespace Contoso.Api.Controllers
                 _logger.LogError(errorMessage, exceptionMessage);
             }
         }
+
+        #endregion
     }
 }

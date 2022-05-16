@@ -10,7 +10,7 @@ namespace Contoso.Domain.DTOs.Students
 {
     public class StudentDto
     {
-        public int Id { get; set; }
+        public int StudentId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
@@ -22,7 +22,15 @@ namespace Contoso.Domain.DTOs.Students
 
         public int AverageGrade
         {
-            get => Convert.ToInt32(Enrollments.Average(e => (int)e.Grade));
+            get
+            {
+                if(Enrollments.Count > 0)
+                {
+                   return Convert.ToInt32(Enrollments.Average(e => (int)e.Grade));
+                }
+
+                return 0;
+            }
         }
 
         public ICollection<EnrollmentDto> Enrollments { get; set; }

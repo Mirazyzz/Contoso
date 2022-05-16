@@ -1,12 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Contoso.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Contoso.Domain.DTOs.Students
 {
-    internal class StudentForCreateDto
+    public class StudentForCreateDto
     {
+        [Required(ErrorMessage = "Please provide first name for the student.")]
+        [MaxLength(50, ErrorMessage = "First name can contain max of 50 characters.")]
+        [MinLength(2, ErrorMessage = "First name should contain at least of 2 characters")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Please provide last name for the student.")]
+        [MaxLength(75, ErrorMessage = "Last name can contain max of 75 characters.")]
+        [MinLength(2, ErrorMessage = "Last name should contain at least of 2 characters")]
+        public string LastName { get; set; }
+
+        public Gender? Gender { get; set; }
+        public DateTime BirthDate { get; set; }
+
+        public StudentForCreateDto(string firstName, string lastName, Gender? gender, DateTime? birthdate)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Gender = gender ?? Enums.Gender.Undisclosed;
+            BirthDate = birthdate ?? DateTime.MinValue;
+        }   
     }
 }

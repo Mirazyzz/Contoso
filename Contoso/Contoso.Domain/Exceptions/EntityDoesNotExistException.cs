@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Contoso.Domain.DTOs.Students
+namespace Contoso.Domain.Exceptions
 {
-    internal class StudentForDeleteDto
+    internal class EntityDoesNotExistException 
     {
     }
 }

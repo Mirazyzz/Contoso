@@ -12,6 +12,16 @@ namespace Contoso.Repositories
         {
         }
 
+        public Task<List<Student>> FindAllStudentsAsync()
+        {
+            return FindAll().ToListAsync();
+        }
+
+        public async Task<Student?> FindStudentByIdAsync(int id)
+        {
+            return await FindById(id);
+        }
+
         public void CreateStudent(Student newStudent)
         {
             Create(newStudent);
@@ -20,16 +30,6 @@ namespace Contoso.Repositories
         public void DeleteStudent(Student studentToRemove)
         {
             Delete(studentToRemove);
-        }
-
-        public Task<List<Student>> GetAllStudents()
-        {
-            return FindAll().ToListAsync();
-        }
-
-        public Task<Student> GetStudentByIdAsync(int id)
-        {
-            return FindById(id);
         }
 
         public void UpdateStudent(Student studentToUpdate)

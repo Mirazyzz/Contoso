@@ -20,16 +20,9 @@ namespace Contoso.Repositories
             return _context.Set<T>().AsNoTracking();
         }
 
-        public async Task<T> FindById(int id)
+        public async Task<T?> FindById(int id)
         {
-            T? result = await _context.Set<T>().FindAsync(id);
-
-            if(result is null)
-            {
-                throw new NotFoundDbException();
-            }
-
-            return result;
+            return await _context.Set<T>().FindAsync(id);
         }
 
         public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression)
@@ -37,9 +30,11 @@ namespace Contoso.Repositories
             return _context.Set<T>().Where(expression).AsNoTracking();
         }
 
-        public void Create(T entity)
+        public T Create(T entity)
         {
             _context.Set<T>().Add(entity);
+
+            return entity;
         }
 
         public async Task CreateRange(IEnumerable<T> entity)

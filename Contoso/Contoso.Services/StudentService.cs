@@ -18,7 +18,33 @@ namespace Contoso.Services
             _mapper = mapper;
         }
 
-        public async void CreateStudent(StudentDto newStudentDto)
+        public async Task<IEnumerable<StudentDto>> GetAllStudentsAsync()
+        {
+            var students = await _repository.Student.FindAllStudentsAsync();
+
+            if (students == null)
+            {
+                throw new Exception("No students found.");
+            }
+
+            var studentDtos = _mapper.Map<IEnumerable<StudentDto>>(students);
+
+            return studentDtos;
+        }
+
+        public async Task<Student?> GetStudentById(int studentId)
+        {
+            var student = await _repository.Student.FindStudentByIdAsync(studentId);
+
+            if(student is null)
+            {
+                throw new NotFoundDbException();
+            }
+
+            return student;
+        }
+
+        public async Task<Student?> CreateStudent(StudentForCreateDto newStudentDto)
         {
             var errors = new List<string>();
 
@@ -40,30 +66,69 @@ namespace Contoso.Services
             {
                 throw new CreateDbException("There was an error adding a new student", ex.Message);
             }
+
+            return student;
         }
 
-        public void DeleteStudent(StudentDto studentToDeleteDto)
+        public async Task DeleteStudent(int studentId)
         {
-            throw new NotImplementedException();
-        }
+            var student = await _repository.Student.FindStudentByIdAsync(studentId);
 
-        public async Task<IEnumerable<StudentDto>> GetStudentsAsync()
-        {
-            var students = await _repository.Student.GetAllStudents();
-
-            if(students == null)
+            if (student is null)
             {
-                throw new Exception("No students found.");
+                throw new NotFoundDbException();
             }
 
-            var studentDtos = _mapper.Map<IEnumerable<StudentDto>>(students);
+            try
+            {
+                _repository.Student.Delete(student);
 
-            return studentDtos;
+                await _repository.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                throw new Exception($"There was an error while deleting student with id: {studentId} from db. {ex.Message}");
+            }
         }
 
-        public void UpdateStudent(StudentDto studentToUpdateDto)
+        public async Task UpdateStudent(int studentId, StudentForUpdateDto studentToUpdateDto)
         {
-            throw new NotImplementedException();
+            if(studentToUpdateDto is null)
+            {
+                throw new Exception("Student to update cannot be null");
+            }
+
+            var studentEntity = await _repository.Student.FindById(studentId);
+
+            if (studentEntity is null)
+            {
+                throw new NotFoundDbException();
+            }
+
+            var errorsList = new List<string>();
+
+            try
+            {
+                studentEntity = _mapper.Map(studentToUpdateDto, studentEntity);
+
+                if (studentEntity is null)
+                {
+                    throw new Exception("Could not map StudentForUpdateDto to Student entity");
+                }
+
+                _repository.Student.Update(studentEntity);
+
+                await _repository.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                throw new Exception($"There was an error updating student. {ex.Message}");
+            }
+        }
+
+        public async Task<bool> StudentExists(int id)
+        {
+            return await _repository.Student.FindById(id) != null;
         }
     }
 }

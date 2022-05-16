@@ -9,6 +9,8 @@ namespace Contoso.Api.Profiles
         public StudentProfile()
         {
             CreateMap<Student, StudentDto>();
+            CreateMap<StudentForCreateDto, Student>();
+            CreateMap<StudentForUpdateDto, Student>();
         }
     }
 }

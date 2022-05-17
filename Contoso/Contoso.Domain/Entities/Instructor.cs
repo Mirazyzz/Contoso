@@ -14,11 +14,13 @@ namespace Contoso.Domain.Entities
 
         public virtual ICollection<CourseAssignment> CourseAssignments { get; set; }
 
-        public Instructor()
+        public Instructor(string fullName, DateTime? hireDate, Gender? gender, int departmentId)
         {
             CourseAssignments = new List<CourseAssignment>();
-            HireDate = DateTime.Now;
-            Gender = Enums.Gender.Undisclosed;
+            HireDate = hireDate ?? DateTime.Now;
+            FullName = fullName;
+            Gender = gender ?? Enums.Gender.Undisclosed;
+            DepartmentId = departmentId;
         }
     }
 }

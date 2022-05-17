@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contoso.Domain.DTOs.Students;
 using Contoso.Domain.Entities;
+using Contoso.Domain.Enums;
 using Contoso.Domain.Exceptions;
 using Contoso.Domain.Interfaces.Repostiory;
 using Contoso.Domain.Interfaces.Services;
@@ -18,9 +19,11 @@ namespace Contoso.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<StudentDto>> GetAllStudentsAsync()
+        public async Task<IEnumerable<StudentDto>> GetAllStudentsAsync(string? name, string? searchQuery, 
+                                                                                int? age, int? cityId,
+                                                                                int? departmentId, Gender? gender)
         {
-            var students = await _repository.Student.FindAllStudentsAsync();
+            var students = await _repository.Student.FindAllStudentsAsync(name, searchQuery, age, cityId, departmentId, gender);
 
             if (students == null)
             {

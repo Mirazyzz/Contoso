@@ -1,10 +1,11 @@
 ﻿using Contoso.Domain.Entities;
+using Contoso.Domain.Enums;
 
 namespace Contoso.Domain.Interfaces.Repostiory
 {
     public interface IStudentRepository : IRepositoryBase<Student>
     {
-        Task<List<Student>> FindAllStudentsAsync();
+        Task<List<Student>> FindAllStudentsAsync(string? name, string? searchQuery, int? age, int? cityId, int? departmentId, Gender? gender);
         Task<Student?> FindStudentByIdAsync(int id);
         void CreateStudent(Student newStudentDto);
         void DeleteStudent(Student studentToDeleteDto);

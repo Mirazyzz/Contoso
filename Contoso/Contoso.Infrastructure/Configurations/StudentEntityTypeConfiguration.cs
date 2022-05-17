@@ -17,6 +17,10 @@ namespace Contoso.Infrastructure.Configurations
                 .WithOne(e => e.Student)
                 .HasForeignKey(e => e.StudentId);
 
+            builder.HasOne(s => s.Department)
+                .WithMany(d => d.Students)
+                .HasForeignKey(s => s.DepartmentId);
+
             builder.Property(s => s.StudentId)
                 .ValueGeneratedOnAdd();
             builder.Property(s => s.FirstName)

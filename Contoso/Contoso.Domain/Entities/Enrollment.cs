@@ -11,5 +11,11 @@ namespace Contoso.Domain.Entities
         public int StudentId { get; set; }
         public virtual Subject Subject { get; set; }
         public int SubjectId { get; set; }
+
+        public Enrollment(int studentId, int subjectId)
+        {
+            StudentId = studentId;
+            SubjectId = subjectId;
+        }
     }
 }

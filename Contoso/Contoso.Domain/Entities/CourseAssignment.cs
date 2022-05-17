@@ -9,5 +9,11 @@
         public int InstructorId { get; set; }
         public virtual Subject Subject { get; set; }
         public int SubjectId { get; set; }
+
+        public CourseAssignment(int instructorId, int subjectId)
+        {
+            InstructorId = instructorId;
+            SubjectId = subjectId;
+        }
     }
 }

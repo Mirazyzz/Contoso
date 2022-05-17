@@ -10,6 +10,9 @@ namespace Contoso.Domain.Entities
         public DateTime? BirthDate { get; set; }
         public Gender Gender { get; set; }
 
+        public virtual Department Department { get; set; }
+        public int DepartmentId { get; set; }
+
         public virtual ICollection<Enrollment> Enrollments { get; set; }
 
         public Student(string firstName, string lastName)

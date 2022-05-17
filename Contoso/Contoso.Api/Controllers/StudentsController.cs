@@ -1,4 +1,5 @@
 ﻿using Contoso.Domain.DTOs.Students;
+using Contoso.Domain.Enums;
 using Contoso.Domain.Exceptions;
 using Contoso.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -21,9 +22,11 @@ namespace Contoso.Api.Controllers
         #region CRUD
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<StudentDto>>> GetStudents()
+        public async Task<ActionResult<IEnumerable<StudentDto>>> GetStudents(string? name, string? searchQuery, 
+                                                                                int? age, int? cityId, 
+                                                                                int? departmentId, Gender? gender)
         {
-            var students = await _service.GetAllStudentsAsync();
+            var students = await _service.GetAllStudentsAsync(name, searchQuery, age, cityId, departmentId, gender);
 
             if(students == null)
             {
@@ -176,5 +179,7 @@ namespace Contoso.Api.Controllers
         }
 
         #endregion
+
+
     }
 }

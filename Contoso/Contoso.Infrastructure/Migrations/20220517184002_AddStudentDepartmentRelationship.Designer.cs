@@ -3,6 +3,7 @@ using System;
 using Contoso.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Contoso.Infrastructure.Migrations
 {
     [DbContext(typeof(ContosoDbContext))]
-    partial class ContosoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220517184002_AddStudentDepartmentRelationship")]
+    partial class AddStudentDepartmentRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.5");

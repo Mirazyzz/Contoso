@@ -1,4 +1,5 @@
 using Contoso.Api.Extensions;
+using Contoso.Api.Helpers;
 using Contoso.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -44,6 +45,15 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    // seed data
+    using (var serviceScope = app.Services.CreateScope())
+    {
+        var services = serviceScope.ServiceProvider;
+
+        var dbContext = services.GetRequiredService<ContosoDbContext>();
+        SeedData.Initialize(dbContext);
+    }
 }
 
 app.UseHttpsRedirection();

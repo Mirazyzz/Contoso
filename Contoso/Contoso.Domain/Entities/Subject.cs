@@ -10,9 +10,11 @@
         public virtual ICollection<Enrollment> Enrollments { get; set; }
         public virtual ICollection<CourseAssignment> CourseAssignments { get; set; }
 
-        public Subject(string subjectName)
+        public Subject(string subjectName, decimal fee, int? totalHours)
         {
             SubjectName = subjectName;
+            Fee = fee;
+            TotalHours = totalHours ?? 40;
             Enrollments = new List<Enrollment>();
             CourseAssignments = new List<CourseAssignment>();
         }

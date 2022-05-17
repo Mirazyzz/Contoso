@@ -33,7 +33,7 @@ namespace Contoso.Api.Helpers
                 var departmentEntities = context.Departments.ToList();
 
                 var subjects = GetSubjects();
-                var students = GetStudents();
+                var students = GetStudents(departmentEntities);
                 var instructors = GetInstructors(departmentEntities);
 
                 context.Subjects.AddRange(subjects);
@@ -100,21 +100,22 @@ namespace Contoso.Api.Helpers
 
             for (int i = 0; i < 20; i++)
             {
-                subjects.Add(new Subject(faker.Lorem.Word()));
+                subjects.Add(new Subject(faker.Lorem.Word(), decimal.Parse(random.Next(150, 500).ToString()), random.Next(20, 80)));
             }
 
             return subjects;
         }
 
-        private static List<Student> GetStudents()
+        private static List<Student> GetStudents(List<Department> departments)
         {
             List<Student> students = new List<Student>();
-
 
             for (int i = 0; i < 250; i++)
             {
                 var randomGender = GetRandomGender();
-                students.Add(new Student(faker.Name.FindName(), faker.Name.LastName(), GetRandomBirthDate(), randomGender));
+                var randomDepartment = departments[random.Next(0, departments.Count - 1)];
+
+                students.Add(new Student(faker.Name.FindName(), faker.Name.LastName(), randomDepartment.DepartmentId, GetRandomBirthDate(), randomGender));
             }
 
             return students;
@@ -188,7 +189,10 @@ namespace Contoso.Api.Helpers
             {
                 var randomSubject = subjects[random.Next(0, subjects.Count - 1)];
 
-                uniqueSubjects.Add(randomSubject.SubjectId, randomSubject);
+                if (!uniqueSubjects.ContainsKey(randomSubject.SubjectId))
+                {
+                    uniqueSubjects.Add(randomSubject.SubjectId, randomSubject);
+                }
             }
 
             return uniqueSubjects.Values.ToList();

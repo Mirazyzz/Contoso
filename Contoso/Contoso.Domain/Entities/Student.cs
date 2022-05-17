@@ -22,10 +22,11 @@ namespace Contoso.Domain.Entities
             Enrollments = new List<Enrollment>();
         }
 
-        public Student(string firstName, string lastName, DateTime? birthDate, Gender? gender)
+        public Student(string firstName, string lastName, int departmentId, DateTime? birthDate, Gender? gender)
         {
             FirstName = firstName;
             LastName = lastName;
+            DepartmentId = departmentId;
             BirthDate = birthDate;
             Gender = gender ?? Gender.Undisclosed;
 

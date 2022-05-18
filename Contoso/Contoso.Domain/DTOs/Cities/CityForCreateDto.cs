@@ -1,10 +1,10 @@
 ﻿namespace Contoso.Domain.DTOs.Cities
 {
-    public class CityFofCreateDto
+    public class CityForCreateDto
     {
         public string CityName { get; set; }
 
-        public CityFofCreateDto(string cityName)
+        public CityForCreateDto(string cityName)
         {
             CityName = cityName;
         }

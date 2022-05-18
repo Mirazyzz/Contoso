@@ -9,6 +9,8 @@ namespace Contoso.Api.Profiles
         public EnrollmentProfile()
         {
             CreateMap<Enrollment, EnrollmentDto>();
+            CreateMap<EnrollmentForCreateDto, Enrollment>();
+            CreateMap<EnrollmentForUpdateDto, Enrollment>();
         }
     }
 }

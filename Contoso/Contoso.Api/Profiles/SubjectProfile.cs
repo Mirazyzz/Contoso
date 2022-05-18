@@ -9,6 +9,8 @@ namespace Contoso.Api.Profiles
         public SubjectProfile()
         {
             CreateMap<Subject, SubjectDto>();
+            CreateMap<SubjectForCreateDto, SubjectDto>();
+            CreateMap<SubjectForUpdateDto, SubjectDto>();
         }
     }
 }

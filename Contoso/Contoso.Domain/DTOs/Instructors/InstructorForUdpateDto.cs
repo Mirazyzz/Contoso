@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Contoso.Domain.Enums;
 
 namespace Contoso.Domain.DTOs.Instructors
 {
-    internal class InstructorForUdpateDto
+    public class InstructorForUpdateDto
     {
+        public int InstructorId { get; set; }
+        public string FullName { get; set; }
+        public DateTime HireDate { get; set; }
+        public Gender Gender { get; set; }
+        public int DepartmentId { get; set; }
     }
 }

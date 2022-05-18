@@ -35,6 +35,20 @@ namespace Contoso.Services
             return studentDtos;
         }
 
+        public async Task<IEnumerable<StudentDto>> GetStudentsWithTopGrades(int limit)
+        {
+            var students = await _repository.Student.FindStudentsWithTopGrades(limit);
+
+            if(students == null)
+            {
+                throw new Exception("No students found.");
+            }
+
+            var studentDtos = _mapper.Map<IEnumerable<StudentDto>>(students);
+
+            return studentDtos;
+        }
+
         public async Task<Student?> GetStudentById(int studentId)
         {
             var student = await _repository.Student.FindStudentByIdAsync(studentId);

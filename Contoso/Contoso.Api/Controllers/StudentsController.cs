@@ -180,6 +180,12 @@ namespace Contoso.Api.Controllers
 
         #endregion
 
+        [HttpGet("topgrades/{limit}")]
+        public async Task<ActionResult<IEnumerable<StudentDto>>> GetStudentsWithTopGrades(int limit)
+        {
+            var students = await _service.GetStudentsWithTopGrades(limit);
 
+            return Ok(students);
+        }
     }
 }

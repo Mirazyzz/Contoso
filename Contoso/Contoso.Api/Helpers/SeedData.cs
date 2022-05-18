@@ -143,7 +143,8 @@ namespace Contoso.Api.Helpers
             {
                 foreach (var subject in uniqueSubjects)
                 {
-                    enrollments.Add(new Enrollment(student.StudentId, subject.SubjectId));
+                    var randomGrade = GetRandomGrade();
+                    enrollments.Add(new Enrollment(student.StudentId, subject.SubjectId, randomGrade));
                 }
             }
 
@@ -170,7 +171,14 @@ namespace Contoso.Api.Helpers
         {
             var valuesAsList = Enum.GetValues(typeof(Gender)).Cast<Gender>().ToList();
 
-            return valuesAsList[random.Next(0, valuesAsList.Count - 1)];
+            return valuesAsList[random.Next(0, valuesAsList.Count)];
+        }
+
+        private static Grade GetRandomGrade()
+        {
+            var valuesAsList = Enum.GetValues(typeof(Grade)).Cast<Grade>().ToList();
+
+            return valuesAsList[random.Next(0, valuesAsList.Count)];
         }
 
         private static DateTime GetRandomBirthDate()

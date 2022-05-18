@@ -6,7 +6,7 @@ namespace Contoso.Domain.DTOs.Enrollments
 {
     public class EnrollmentDto
     {
-        public int Id { get; set; }
+        public int EnrollmentId { get; set; }
         public StudentDto Student { get; set; }
         public SubjectDto Subject { get; set; }
         public Grade Grade { get; set; }

@@ -77,6 +77,19 @@ namespace Contoso.Repositories
             return await students.ToListAsync();
         }
 
+        public async Task<List<Student>> FindStudentsWithTopGrades(int limit)
+        {
+            var students = await _context.Students
+                .Include(s => s.Enrollments.OrderByDescending(e => e.Grade))
+                .ThenInclude(e => e.Subject)
+                .OrderByDescending(s => s.Enrollments.Average(e => ((int?)e.Grade)))
+                .Take(limit)
+                .AsNoTracking()
+                .ToListAsync();
+
+            return students;
+        }
+
         public async Task<Student?> FindStudentByIdAsync(int id)
         {
             return await FindById(id);

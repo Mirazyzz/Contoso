@@ -12,10 +12,11 @@ namespace Contoso.Domain.Entities
         public virtual Subject Subject { get; set; }
         public int SubjectId { get; set; }
 
-        public Enrollment(int studentId, int subjectId)
+        public Enrollment(int studentId, int subjectId, Grade? grade)
         {
             StudentId = studentId;
             SubjectId = subjectId;
+            Grade = grade ?? Enums.Grade.F;
         }
     }
 }

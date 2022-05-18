@@ -1,4 +1,5 @@
 ﻿using Contoso.Domain.DTOs.Students;
+using Contoso.Domain.DTOs.Subjects;
 using Contoso.Domain.Enums;
 
 namespace Contoso.Domain.DTOs.Enrollments

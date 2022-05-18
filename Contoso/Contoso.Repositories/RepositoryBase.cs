@@ -1,5 +1,4 @@
-﻿using Contoso.Domain.Exceptions;
-using Contoso.Domain.Interfaces.Repostiory;
+﻿using Contoso.Domain.Interfaces.Repostiory;
 using Contoso.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;

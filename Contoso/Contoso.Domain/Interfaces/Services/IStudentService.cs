@@ -6,7 +6,9 @@ namespace Contoso.Domain.Interfaces.Services
 {
     public interface IStudentService
     {
-        Task<IEnumerable<StudentDto>> GetAllStudentsAsync(string? name, string? searchQuery, int? age, int? cityId, int? departmentId, Gender? gender);
+        Task<IEnumerable<StudentDto>> GetAllStudentsAsync(string? name, string? searchQuery, 
+                                                          int? age, int? cityId, int? departmentId, 
+                                                          Gender? gender, string? orderBy);
         Task<Student?> GetStudentById(int id);
         Task<Student?> CreateStudent(StudentForCreateDto newStudentDto);
         Task UpdateStudent(int studentId, StudentForUpdateDto studentToUpdateDto);

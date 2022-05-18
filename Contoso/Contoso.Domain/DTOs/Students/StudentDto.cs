@@ -1,10 +1,6 @@
 ﻿using Contoso.Domain.DTOs.Enrollments;
 using Contoso.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace Contoso.Domain.DTOs.Students
 {
@@ -13,6 +9,7 @@ namespace Contoso.Domain.DTOs.Students
         public int StudentId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime BirthDate { get; set; }
         public Gender Gender { get; set; }
         public int NumberOfCourses

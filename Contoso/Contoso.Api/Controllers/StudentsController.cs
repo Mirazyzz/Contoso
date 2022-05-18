@@ -23,10 +23,10 @@ namespace Contoso.Api.Controllers
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<StudentDto>>> GetStudents(string? name, string? searchQuery, 
-                                                                                int? age, int? cityId, 
-                                                                                int? departmentId, Gender? gender)
+                                                                                int? age, int? cityId,  int? departmentId, 
+                                                                                Gender? gender, string? orderBy)
         {
-            var students = await _service.GetAllStudentsAsync(name, searchQuery, age, cityId, departmentId, gender);
+            var students = await _service.GetAllStudentsAsync(name, searchQuery, age, cityId, departmentId, gender, orderBy);
 
             if(students == null)
             {

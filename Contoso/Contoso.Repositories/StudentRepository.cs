@@ -14,10 +14,12 @@ namespace Contoso.Repositories
         }
 
         public async Task<List<Student>> FindAllStudentsAsync(string? name, string? searchQuery,
-                                                                                int? age, int? cityId,
-                                                                                int? departmentId, Gender? gender)
+                                                              int? age, int? cityId, int? departmentId, 
+                                                              Gender? gender, string? orderBy)
         {
-            IQueryable<Student> students = _context.Students.Include(s => s.Department.City).AsNoTracking().AsQueryable();
+            IQueryable<Student> students = _context.Students.Include(s => s.Department.City)
+                                                            .AsNoTracking()
+                                                            .AsQueryable();
 
             if (!string.IsNullOrEmpty(name) && !string.IsNullOrWhiteSpace(name))
             {
@@ -48,6 +50,28 @@ namespace Contoso.Repositories
             if (gender.HasValue)
             {
                 students = students.Where(s => s.Gender.Equals(gender));
+            }
+
+            // Order the final result
+            if (string.IsNullOrEmpty(orderBy))
+            {
+                students = students.OrderBy(s => s.FirstName)
+                                    .ThenBy(s => s.LastName)
+                                    .ThenByDescending(s => s.BirthDate);
+            }
+            else
+            {
+                students = orderBy switch
+                {
+                    "firstName_desc" => students.OrderByDescending(s => s.FirstName),
+                    "lastName" => students.OrderBy(s => s.LastName),
+                    "lastName_desc" => students.OrderByDescending(s => s.LastName),
+                    "birthDate" => students.OrderBy(s => s.BirthDate),
+                    "birthDate_desc" => students.OrderByDescending(s => s.BirthDate),
+                    "gender" => students.OrderBy(s => s.Gender),
+                    "gender_desc" => students.OrderByDescending(s => s.Gender),
+                    _ => students.OrderBy(s => s.FirstName)
+                };
             }
 
             return await students.ToListAsync();

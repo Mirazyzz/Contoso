@@ -5,7 +5,9 @@ namespace Contoso.Domain.Interfaces.Repostiory
 {
     public interface IStudentRepository : IRepositoryBase<Student>
     {
-        Task<List<Student>> FindAllStudentsAsync(string? name, string? searchQuery, int? age, int? cityId, int? departmentId, Gender? gender);
+        Task<List<Student>> FindAllStudentsAsync(string? name, string? searchQuery, 
+                                                 int? age, int? cityId,  int? departmentId, 
+                                                 Gender? gender,  string? orderBy);
         Task<Student?> FindStudentByIdAsync(int id);
         void CreateStudent(Student newStudentDto);
         void DeleteStudent(Student studentToDeleteDto);

@@ -8,6 +8,7 @@ namespace Contoso.Repositories
         private readonly ContosoDbContext _context;
         
         private IStudentRepository? _studentRepository;
+        private ICityRepository? _cityRepository;
 
         public CommonRepository(ContosoDbContext context)
         {
@@ -17,6 +18,11 @@ namespace Contoso.Repositories
         public IStudentRepository Student
         {
             get => _studentRepository ??= new StudentRepository(_context);
+        }
+
+        public ICityRepository City
+        {
+            get => _cityRepository ??= new CityRepository(_context);
         }
 
         public async Task SaveChangesAsync()

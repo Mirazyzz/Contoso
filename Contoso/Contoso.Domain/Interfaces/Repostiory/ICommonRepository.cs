@@ -3,6 +3,7 @@
     public interface ICommonRepository
     {
         IStudentRepository Student { get; }
+        ICityRepository City { get; }
 
         Task SaveChangesAsync();
     }

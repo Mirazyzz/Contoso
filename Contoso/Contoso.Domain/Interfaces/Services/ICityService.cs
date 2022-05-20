@@ -4,7 +4,7 @@ namespace Contoso.Domain.Interfaces.Services
 {
     public interface ICityService
     {
-        Task<IEnumerable<CityDto>> GetAllCitiesAsyc(string? name, string? searchString);
+        Task<IEnumerable<CityDto>> GetAllCitiesAsync(string? name, string? searchString);
         Task<CityDto?> GetCityByIdAsync(int id);
         Task<CityDto?> CreateCityAsync(CityForCreateDto newCityDto);
         Task UpdateCityAsync( CityForUpdateDto cityForUpdateDto);

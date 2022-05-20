@@ -13,6 +13,7 @@ namespace Contoso.Api.Extensions
         {
             services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<ICityService, CityService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }

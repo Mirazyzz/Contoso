@@ -14,7 +14,10 @@ namespace Contoso.Repositories
 
         public async Task<IEnumerable<City>> FindAllCitiesAsync(string? name, string? searchString)
         {
-            var cities = _context.Cities.AsNoTracking().AsQueryable();
+            var cities = _context.Cities
+                .Include(c => c.Departments)
+                .AsNoTracking()
+                .AsQueryable();
 
             if (!string.IsNullOrEmpty(name))
             {

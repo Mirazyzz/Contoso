@@ -22,7 +22,7 @@ namespace Contoso.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<CityDto>> GetAllCitiesAsyc(string? name, string? searchString)
+        public async Task<IEnumerable<CityDto>> GetAllCitiesAsync(string? name, string? searchString)
         {
             try
             {

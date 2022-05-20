@@ -121,7 +121,7 @@ namespace Contoso.Services
             }
             catch(Exception ex)
             {
-                throw new CreateDbException("There was an error adding a new student.", ex.Message);
+                throw new Exception("There was an error adding a new student.", ex);
             }
         }
 

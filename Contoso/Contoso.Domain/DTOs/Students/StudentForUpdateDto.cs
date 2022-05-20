@@ -5,6 +5,8 @@ namespace Contoso.Domain.DTOs.Students
 {
     public class StudentForUpdateDto
     {
+        public int StudentId { get; set; }
+
         [Required(ErrorMessage = "Please provide first name for the student.")]
         [MaxLength(50, ErrorMessage = "First name can contain max of 50 characters.")]
         [MinLength(2, ErrorMessage = "First name should contain at least of 2 characters")]

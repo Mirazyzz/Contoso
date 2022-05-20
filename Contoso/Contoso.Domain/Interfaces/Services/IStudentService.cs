@@ -9,11 +9,11 @@ namespace Contoso.Domain.Interfaces.Services
         Task<IEnumerable<StudentDto>> GetAllStudentsAsync(string? name, string? searchQuery, 
                                                           int? age, int? cityId, int? departmentId, 
                                                           Gender? gender, string? orderBy);
-        Task<IEnumerable<StudentDto>> GetStudentsWithTopGrades(int limit);
-        Task<Student?> GetStudentById(int id);
-        Task<Student?> CreateStudent(StudentForCreateDto newStudentDto);
-        Task UpdateStudent(int studentId, StudentForUpdateDto studentToUpdateDto);
-        Task DeleteStudent(int studentId);
-        Task<bool> StudentExists(int id);
+        Task<IEnumerable<StudentDto>> GetStudentsWithTopGradesAsync(int limit);
+        Task<StudentDto?> GetStudentByIdAsync(int id);
+        Task<StudentDto?> CreateStudentAsync(StudentForCreateDto newStudentDto);
+        Task UpdateStudentAsync(int studentId, StudentForUpdateDto studentToUpdateDto);
+        Task DeleteStudentAsync(int studentId);
+        Task<bool> StudentExistsAsync(int id);
     }
 }

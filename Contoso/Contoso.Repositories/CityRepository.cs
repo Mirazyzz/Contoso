@@ -49,7 +49,7 @@ namespace Contoso.Repositories
 
         public void UpdateCity(City cityToUpdate)
         {
-            Delete(cityToUpdate);
+            Update(cityToUpdate);
         }
     }
 }

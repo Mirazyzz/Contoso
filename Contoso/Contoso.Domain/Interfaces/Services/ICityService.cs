@@ -7,8 +7,8 @@ namespace Contoso.Domain.Interfaces.Services
         Task<IEnumerable<CityDto>> GetAllCitiesAsync(string? name, string? searchString);
         Task<CityDto?> GetCityByIdAsync(int id);
         Task<CityDto?> CreateCityAsync(CityForCreateDto newCityDto);
-        Task UpdateCityAsync( CityForUpdateDto cityForUpdateDto);
+        Task UpdateCityAsync(int cityId, CityForUpdateDto cityForUpdateDto);
         Task DeleteCityAsync(int cityId);
-        Task<bool> CityExists(int id);
+        Task<bool> CityExistsAsync(int id);
     }
 }

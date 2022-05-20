@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contoso.Domain.DTOs.Cities;
 using Contoso.Domain.Entities;
+using Contoso.Domain.Exceptions;
 using Contoso.Domain.Interfaces.Repostiory;
 using Contoso.Domain.Interfaces.Services;
 using System;
@@ -28,29 +29,49 @@ namespace Contoso.Services
             {
                 var cities = await _repository.City.FindAllCitiesAsync(name, searchString);
 
+                if(cities is null)
+                {
+                    throw new Exception("Cities not found.");
+                }
+
                 var cityDtos = _mapper.Map<IEnumerable<CityDto>>(cities);
+
+                if(cityDtos is null)
+                {
+                    throw new Exception("Could not map City entites list to City DTOs.");
+                }
 
                 return cityDtos;
             }
             catch(Exception ex)
             {
-                throw new Exception($"There was an error while retrieving cities. {ex.Message}");
+                throw new Exception($"There was an error while retrieving cities.", ex);
             }
         }
 
-        public async Task<CityDto?> GetCityByIdAsync(int id)
+        public async Task<CityDto?> GetCityByIdAsync(int cityId)
         {
             try
             {
-                var city = await _repository.City.FindCityByIdAsync(id);
+                var city = await _repository.City.FindCityByIdAsync(cityId);
+
+                if(city is null)
+                {
+                    throw new EntityDoesNotExistException($"City with id: {cityId} does not exist.");
+                }
 
                 var cityDto = _mapper.Map<CityDto>(city);
+
+                if(cityDto is null)
+                {
+                    throw new Exception("Cannot map City entity to City DTO");
+                }
 
                 return cityDto;
             }
             catch(Exception ex)
             {
-                throw new Exception($"There was an error while retreiving city with id: {id}. {ex.Message}");
+                throw new Exception($"There was an error while retreiving city with id: {cityId}.", ex);
             }
         }
 
@@ -58,57 +79,78 @@ namespace Contoso.Services
         {
             try
             {
+                // Map to city entity
                 var cityEntity = _mapper.Map<City>(newCityDto);
 
-                var createdCity = _repository.City.CreateCity(cityEntity);
+                if(cityEntity is null)
+                {
+                    throw new Exception("Could not map CityForCreateDto to City entity.");
+                }
 
+                var createdCity = _repository.City.CreateCity(cityEntity);
                 await _repository.SaveChangesAsync();
 
+                // Map newly created student back to DTO
                 var cityDto = _mapper.Map<CityDto>(createdCity);
 
                 return cityDto;
             }
             catch (Exception ex)
             {
-                throw new Exception($"There was an error adding new city: {newCityDto}. {ex.Message}");
+                throw new Exception($"There was an error while creating a new city: {newCityDto}.", ex);
             }
         }
 
-        public async Task DeleteCityAsync(int cityId)
+        public async Task UpdateCityAsync(int cityId, CityForUpdateDto cityForUpdateDto)
         {
+            var cityEntity = await _repository.City.FindCityByIdAsync(cityId);
+
+            if(cityEntity is null)
+            {
+                throw new EntityDoesNotExistException($"City with id: {cityId} does not exist.");
+            }
+
             try
             {
-                var cityEntity = await _repository.City.FindCityByIdAsync(cityId);
+                cityEntity = _mapper.Map(cityForUpdateDto, cityEntity);
 
-                if(cityEntity != null)
+                if (cityEntity is null)
                 {
-                    _repository.City.DeleteCity(cityEntity);
+                    throw new Exception("Could not map CityForUpdateDto to City entity.");
                 }
-            }
-            catch(Exception ex)
-            {
-                throw new Exception($"There was an error deleting city with id: {cityId}. {ex.Message}");
-            }
-        }
-
-        public async Task UpdateCityAsync(CityForUpdateDto cityForUpdateDto)
-        {
-            try
-            {
-                var cityEntity = _mapper.Map<City>(cityForUpdateDto);
                 
                 _repository.City.UpdateCity(cityEntity);
                 await _repository.SaveChangesAsync();
             }
             catch(Exception ex)
             {
-                throw new Exception($"There was an error updating city: {cityForUpdateDto}. {ex.Message}");
+                throw new Exception($"There was an error updating city: {cityForUpdateDto}.", ex);
             }
         }
 
-        public async Task<bool> CityExists(int id)
+        public async Task DeleteCityAsync(int cityId)
         {
-            return await _repository.City.FindCityByIdAsync(id) != null;
+            var cityEntity = await _repository.City.FindCityByIdAsync(cityId);
+
+            if (cityEntity is null)
+            {
+                throw new EntityDoesNotExistException($"City with id: {cityId} does not exist.");
+            }
+
+            try
+            {
+                _repository.City.DeleteCity(cityEntity);
+                await _repository.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"There was an error deleting city with id: {cityId}.", ex);
+            }
+        }
+
+        public async Task<bool> CityExistsAsync(int id)
+        {
+            return await _repository.City.FindCityByIdAsync(id) is not null;
         }
     }
 }

@@ -2,19 +2,19 @@
 
 namespace Contoso.Domain.Exceptions
 {
-    public class EntityDoesNotExistException : Exception
+    public class EntityAlreadyExistException : Exception
     {
-        public EntityDoesNotExistException() 
+        public EntityAlreadyExistException()
             : base()
         {
         }
 
-        public EntityDoesNotExistException(string message)
+        public EntityAlreadyExistException(string message)
             : base(message)
         {
         }
 
-        public EntityDoesNotExistException(string message, params object[] args)
+        public EntityAlreadyExistException(string message, params object[] args)
             : base(string.Format(CultureInfo.CurrentCulture, message, args))
         {
         }

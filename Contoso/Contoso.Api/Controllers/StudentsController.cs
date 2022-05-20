@@ -26,155 +26,145 @@ namespace Contoso.Api.Controllers
                                                                                 int? age, int? cityId,  int? departmentId, 
                                                                                 Gender? gender, string? orderBy)
         {
-            var students = await _service.GetAllStudentsAsync(name, searchQuery, age, cityId, departmentId, gender, orderBy);
-
-            if(students == null)
+            try
             {
-                return NotFound();
-            }
+                var students = await _service.GetAllStudentsAsync(name, searchQuery, age, cityId, departmentId, gender, orderBy);
 
-            return Ok(students);
+                if (students is null)
+                {
+                    return NotFound("No students were found.");
+                }
+
+                return Ok(students);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError($"Error while retreiving students.", ex.Message);
+
+                return StatusCode(500, "There was an error while retrieving students. Please, try again later.");
+            }
         }
 
         [HttpGet("{studentId}")]
         public async Task<ActionResult<StudentDto>> GetStudentById(int studentId)
         {
-            string errorMessage = string.Empty;
-            string exceptionMessage = string.Empty;
-
             try
             {
-                var student = await _service.GetStudentById(studentId);
+                var student = await _service.GetStudentByIdAsync(studentId);
 
                 if(student is null)
                 {
-                    errorMessage = $"Could not find student with id: {studentId}";
+                    _logger.LogWarning($"Retrieving non existing student with id: {studentId}.");
 
-                    return NotFound($"Could not find student with id: {studentId}");
+                    return NotFound($"Could not find student with id: {studentId}.");
                 }
 
                 return Ok(student);
             }
-            catch(NotFoundDbException ex)
-            {
-                errorMessage = $"Could not find student with id: {studentId}";
-                exceptionMessage = ex.Message;
-
-                return NotFound($"Could not find student with id: {studentId}");
-            }
             catch(Exception ex)
             {
-                errorMessage = $"There was an error while retreiving student with id: {studentId}";
-                exceptionMessage = ex.Message;
+                _logger.LogError($"Error while retrieving student with id: {studentId}", ex.Message);
 
-                return NotFound($"There was an error while retreiving student with id: {studentId}");
-            }
-            finally
-            {
-                _logger.LogError(errorMessage, exceptionMessage);
+                return StatusCode(500, $"There was an error while retrieving student with id: {studentId}. Please, try again later.");
             }
         }
 
         [HttpPost]
-        public async Task<ActionResult<StudentDto>> CreateStudent(StudentForCreateDto studentDto)
+        public async Task<ActionResult<StudentDto>> CreateStudent(StudentForCreateDto studentToCreate)
         {
-            string errorMessage = string.Empty;
-            string exceptionMessage = string.Empty;
-
             try
             {
-                var studentEntity = await _service.CreateStudent(studentDto);
-
-                if (studentEntity is null)
+                if(studentToCreate is null)
                 {
-                    errorMessage = "There was an error creating a new student, please try again later";
-
-                    return BadRequest(errorMessage);
+                    return BadRequest("Student cannot be empty.");
                 }
 
-                return Ok(studentEntity);
-            }
-            catch(CreateDbException ex)
-            {
-                errorMessage = "There was an error creating a new student, please try again later";
-                exceptionMessage = ex.Message;
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("The student object is invalid.");
+                }
 
-                return BadRequest(errorMessage);
+                var studentDto = await _service.CreateStudentAsync(studentToCreate);
+
+                if (studentDto is null)
+                {
+                    return StatusCode(500, "Unknown error has occured while creating a new student. Please, try again later.");
+                }
+
+                return Ok(studentDto);
+            }
+            catch(EntityAlreadyExistException ex)
+            {
+                _logger.LogWarning($"Trying to create existing student: {studentToCreate}", ex.Message);
+
+                return BadRequest("Student you are trying to create already exists.");
             }
             catch(Exception ex)
             {
-                errorMessage = "There was an error creating a new student, please try again later";
-                exceptionMessage = ex.Message;
+                _logger.LogError($"Error while creating a new student {studentToCreate}", ex.Message);
 
-                return BadRequest(errorMessage);
-            }
-            finally
-            {
-                _logger.LogError(errorMessage, exceptionMessage);
+                return StatusCode(500, "There was an error while creating a new student. Please, try again later.");
             }
         }
 
         [HttpPut("{studentId}")]
         public async Task<ActionResult> UpdateStudent(int studentId, StudentForUpdateDto studentToUpdateDto)
         {
-            string errorMessage = string.Empty;
-            string exceptionMessage = string.Empty;
-
             try
             {
-                await _service.UpdateStudent(studentId, studentToUpdateDto);
+                if(studentToUpdateDto is null)
+                {
+                    return BadRequest("Student cannot be empty.");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("The student for update is not valid.");
+                }
+
+                if(studentToUpdateDto.StudentId != studentId)
+                {
+                    return BadRequest($"Student id: {studentToUpdateDto.StudentId} does not match with route id: {studentId}");
+                }
+
+                await _service.UpdateStudentAsync(studentId, studentToUpdateDto);
 
                 return NoContent();
             }
-            catch(NotFoundDbException ex)
+            catch(EntityDoesNotExistException ex)
             {
-                errorMessage = $"The student with id: {studentId} you are trying to update does not exist. Please consider creating.";
-                exceptionMessage = ex.Message;
+                _logger.LogWarning("Updating non existing student", ex.Message);
 
-                return NotFound(errorMessage);
+                return NotFound($"The student with id: {studentId} that you are trying to update does not exist. Please consider creating");
             }
             catch(Exception ex)
             {
-                errorMessage = $"There was an error while updating the student with id{studentId}.";
-                exceptionMessage = ex.Message;
+                _logger.LogError($"Error while updating a student with id: {studentId}", ex.Message);
 
-                return BadRequest(ex.Message);
-            }
-            finally
-            { 
-                _logger.LogError(errorMessage, exceptionMessage);
+                return StatusCode(500, $"There was an error while updating the student with id: {studentId}. Please, try again later");
             }
         }
 
         [HttpDelete("{studentId}")]
         public async Task<ActionResult> DeleteStudent(int studentId)
         {
-            string errorMessage = string.Empty;
-            string exceptionMessage = string.Empty;
-
             try
             {
-                await _service.DeleteStudent(studentId);
+                await _service.DeleteStudentAsync(studentId);
 
                 return NoContent();
             }
-            catch(NotFoundDbException ex)
+            catch(EntityDoesNotExistException ex)
             {
-                errorMessage = $"Student with id: {studentId} does not exist.";
-                exceptionMessage = ex.Message;
-
-                return NotFound(errorMessage);
+                _logger.LogWarning($"Deleting non existing student with id: {studentId}", ex.Message);
+                    
+                return BadRequest($"The student with id: {studentId} that you are trying to delete does not exist.");
             }
             catch(Exception ex)
             {
-                errorMessage = $"There was an error while deleting student with id: {studentId}";
-                exceptionMessage = ex.Message;
+                _logger.LogError($"Error while deleting student with id: {studentId}", ex.Message);
 
-                return BadRequest(errorMessage);
-            }
-            finally
-            {
-                _logger.LogError(errorMessage, exceptionMessage);
+                return StatusCode(500, $"There was an error while deleting student with id: {studentId}. Please, try again later");
             }
         }
 
@@ -183,9 +173,25 @@ namespace Contoso.Api.Controllers
         [HttpGet("topgrades/{limit}")]
         public async Task<ActionResult<IEnumerable<StudentDto>>> GetStudentsWithTopGrades(int limit)
         {
-            var students = await _service.GetStudentsWithTopGrades(limit);
+            try
+            {
+                var students = await _service.GetStudentsWithTopGradesAsync(limit);
 
-            return Ok(students);
+                if(students is null)
+                {
+                    _logger.LogWarning("Retreiving non existing student with top grades.");
+
+                    return NotFound();
+                }
+
+                return Ok(students);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError($"Error while retrieving students with top grades with limit: {limit}", ex.Message);
+
+                return StatusCode(500, "There was an error while retrieving students. Please try again later");
+            }
         }
     }
 }
